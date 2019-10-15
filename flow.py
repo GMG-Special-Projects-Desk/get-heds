@@ -7,12 +7,13 @@ from bs4 import BeautifulSoup
 import time
 def limit():
 	# this means only include sitemaps before a year
-	limit = "none"
+	limit = []
 	try:
-		limit = sys.argv[2]
+		ulimit=sys.argv[2]
+		limit = sys.argv[3]
 	except:
 		print(" No Limit ")
-	return limit
+	return [ulimit,limit]
 
 def get_site():
 	return sys.argv[1]
@@ -64,8 +65,13 @@ def make_request(site):
 
 def checkdate(limit,d):
 	da = datetime.datetime.strptime(d['lastmod'].split('T')[0], '%Y-%m-%d')
-	if limit == "none":
+	if len(limit) < 2:
 		return True
 	else:
-		li = datetime.datetime.strptime(limit, '%Y')
-		return li > da
+		start=datetime.datetime.strptime(limit[0], '%Y')
+		end = datetime.datetime.strptime(limit[1], '%Y')
+		if start < da and end > da:
+			print(da)
+			return True
+		else:
+			return False
