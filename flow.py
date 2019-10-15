@@ -49,7 +49,6 @@ def get_articles(link):
 
 
 def get_hed(link):
-	print(link)
 	try:
 		response = requests.get(link)
 		d = response.text
@@ -58,7 +57,7 @@ def get_hed(link):
 		print(h.encode('utf-8').strip())
 		return h
 	except:
-		return("issue getting headline")
+		print("issue getting headline for "+link)
 
 def make_request(site):
 	return requests.get('https://'+site+'/sitemap.xml')
